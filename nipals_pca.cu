@@ -55,8 +55,8 @@ int main(int argc, char** argv) {
     fprintf(stderr, "! CUBLAS initialization error\n"); return EXIT_FAILURE;
   }
   
-  // initiallize some random test data
-  X double *X;
+  // initiallize some random test data X
+  double *X;
   X = (double*)malloc(M*N * sizeof(X[0]));
 
   if(X == 0) {
@@ -145,8 +145,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   // maximum number of iterations
   int J = 10000;
 
-  // max error double
-  er = 1.0e-7;
+  // max error
+  double er = 1.0e-7;
   int k, n, j;
 
   // transfer the host matrix X to device matrix dR
@@ -212,11 +212,11 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
 
     for(j=0; j<J; j++) {
       
-      cublasDgemv(’t’, M, N, 1.0, dR, M, &dT[k*M], 1, 0.0, &dP[k*N], 1);
+      cublasDgemv('t', M, N, 1.0, dR, M, &dT[k*M], 1, 0.0, &dP[k*N], 1);
       
       cublasDscal(N, 1.0/cublasDnrm2(N, &dP[k*N], 1), &dP[k*N], 1);
       
-      cublasDgemv(’n’, M, N, 1.0, dR, M, &dP[k*N], 1, 0.0, &dT[k*M], 1);
+      cublasDgemv('n', M, N, 1.0, dR, M, &dP[k*N], 1, 0.0, &dT[k*M], 1);
 
       b = cublasDnrm2(M, &dT[k*M], 1);
       
