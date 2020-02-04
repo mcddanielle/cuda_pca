@@ -2,6 +2,10 @@
 // implementation of NIPALS-PCA algorithm
 //
 // M. Andrecut (c) 2008
+//
+//to compile
+//nvcc -O3 nipals_pca.c -lgsl -lgslcblas -lm -lcublas
+//
 // includes, system
 #include <stdio.h>
 #include <stdlib.h>
