@@ -13,7 +13,7 @@
 #include <time.h>
 
 // includes, cuda
-#include <cublas.h>
+#include <cublas_v2.h>  //DM deprecated
 
 // matrix indexing convention
 #define id(m, n, ld) (((n) * (ld) + (m)))
@@ -52,7 +52,8 @@ int main(int argc, char** argv) {
   double dtime;
 
   // initialize cublas
-  cublasStatus status;
+  //cublasStatus status;  //dm replace deprecated
+  cublasStatus_t status;
   status = cublasInit();
   
   if(status != CUBLAS_STATUS_SUCCESS) {
@@ -145,7 +146,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   // output: R, MxN residual matrix
   
   // CUBLAS error handling
-  cublasStatus status;
+  //cublasStatus status;   //dm replace deprecated
+  cublasStatus_t status;
 
   // maximum number of iterations
   int J = 10000;
