@@ -251,9 +251,15 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   cublasGetMatrix(M, N, sizeof(dR[0]), dR, M, R, M);
 
   // clean up memory
-  status = cublasFree(dP);
-  status = cublasFree(dT);
-  status = cublasFree(dR);
+  /* //DM deprecated
+   *status = cublasFree(dP);
+   *status = cublasFree(dT);
+   *status = cublasFree(dR);
+   */
+   
+  status = cudaFree(dP);
+  status = cudaFree(dT);
+  status = cudaFree(dR);
   
   return EXIT_SUCCESS;
 }
