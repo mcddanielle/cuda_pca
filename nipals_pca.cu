@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
   cublasStatus_t status;
   status = cublasInit();
   
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf(stderr, "! CUBLAS initialization error\n");
     return EXIT_FAILURE;
   }
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
   // shutdown
   status = cublasShutdown();
 
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf(stderr, "! cublas shutdown error\n"); return EXIT_FAILURE;
   }
   
@@ -163,14 +163,14 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   //status = cublasAlloc(M*N, sizeof(dR[0]), (void**)&dR); //dm deprecated
   status = cudaMalloc((void**)&dR, M*N*sizeof(dR[0]) );
   
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf (stderr, "! device memory allocation error (dR)\n");
     return EXIT_FAILURE;
   }
   
   status = cublasSetMatrix(M, N, sizeof(R[0]), R, M, dR, M);
   
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf(stderr, "! device access error (write dR)\n");
     return EXIT_FAILURE; }
     
@@ -180,7 +180,7 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   //status = cublasAlloc(M*K, sizeof(dT[0]), (void**)&dT);  //dm deprecated
   status = cudaMalloc( (void**)&dT, M*K*sizeof(dT[0]) );
 
-  if(status != CUBLAS_STATUS_SUCCESS){
+  if(status != cudaSuccess){
     fprintf(stderr, "! device memory allocation error (dT)\n");
     return EXIT_FAILURE;
   }
@@ -189,7 +189,7 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   //status = cublasAlloc(N*K, sizeof(dP[0]), (void**)&dP);  //dm deprecated
   status = cudaMalloc((void**)&dP, N*K*sizeof(dP[0]));
   
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf(stderr, "! device memory allocation error (dP)\n");
     return EXIT_FAILURE;
   }
@@ -201,7 +201,7 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   //status = cublasAlloc(M, sizeof(dU[0]), (void**)&dU);  //dm deprecated
   status = cudaMalloc((void**)&dU, M*sizeof(dU[0]));
   
-  if(status != CUBLAS_STATUS_SUCCESS) {
+  if(status != cudaSuccess) {
     fprintf(stderr, "! device memory allocation error (dU)\n");
     return EXIT_FAILURE;
   }
