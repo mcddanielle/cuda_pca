@@ -56,7 +56,8 @@ int main(int argc, char** argv) {
   status = cublasInit();
   
   if(status != CUBLAS_STATUS_SUCCESS) {
-    fprintf(stderr, "! CUBLAS initialization error\n"); return EXIT_FAILURE;
+    fprintf(stderr, "! CUBLAS initialization error\n");
+    return EXIT_FAILURE;
   }
   
   // initiallize some random test data X
@@ -151,10 +152,10 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
 
   // max error
   double er = 1.0e-7;
+
   int k, n, j;
 
   // transfer the host matrix X to device matrix dR
-
   double *dR = 0;
 
   status = cublasAlloc(M*N, sizeof(dR[0]), (void**)&dR);
@@ -165,11 +166,12 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   }
   
   status = cublasSetMatrix(M, N, sizeof(R[0]), R, M, dR, M);
+  
   if(status != CUBLAS_STATUS_SUCCESS) {
     fprintf(stderr, "! device access error (write dR)\n");
     return EXIT_FAILURE; }
+    
   // allocate device memory for T, P
-
   double *dT = 0;
   
   status = cublasAlloc(M*K, sizeof(dT[0]), (void**)&dT);
