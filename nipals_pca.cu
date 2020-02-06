@@ -160,7 +160,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   // transfer the host matrix X to device matrix dR
   double *dR = 0;
 
-  status = cublasAlloc(M*N, sizeof(dR[0]), (void**)&dR);
+  //status = cublasAlloc(M*N, sizeof(dR[0]), (void**)&dR); //dm deprecated
+  status = cudaMalloc((void**)&dR, M*N*sizeof(dR[0]) );
   
   if(status != CUBLAS_STATUS_SUCCESS) {
     fprintf (stderr, "! device memory allocation error (dR)\n");
@@ -176,7 +177,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   // allocate device memory for T, P
   double *dT = 0;
   
-  status = cublasAlloc(M*K, sizeof(dT[0]), (void**)&dT);
+  //status = cublasAlloc(M*K, sizeof(dT[0]), (void**)&dT);  //dm deprecated
+  status = cudaMalloc( (void**)&dT, M*K*sizeof(dT[0]) );
 
   if(status != CUBLAS_STATUS_SUCCESS){
     fprintf(stderr, "! device memory allocation error (dT)\n");
@@ -184,7 +186,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
   }
   
   double *dP = 0;
-  status = cublasAlloc(N*K, sizeof(dP[0]), (void**)&dP);
+  //status = cublasAlloc(N*K, sizeof(dP[0]), (void**)&dP);  //dm deprecated
+  status = cudaMalloc((void**)&dP, N*K*sizeof(dP[0]));
   
   if(status != CUBLAS_STATUS_SUCCESS) {
     fprintf(stderr, "! device memory allocation error (dP)\n");
@@ -195,7 +198,8 @@ int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
 
   double *dU = 0;
 
-  status = cublasAlloc(M, sizeof(dU[0]), (void**)&dU);
+  //status = cublasAlloc(M, sizeof(dU[0]), (void**)&dU);  //dm deprecated
+  status = cudaMalloc((void**)&dU, M*sizeof(dU[0]));
   
   if(status != CUBLAS_STATUS_SUCCESS) {
     fprintf(stderr, "! device memory allocation error (dU)\n");
