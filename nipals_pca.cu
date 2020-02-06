@@ -20,7 +20,7 @@
 
 // declarations
 int nipals_cublas(int, int, int,
-		  double *, double *, double *);
+		  double *, double *, double *); //dm not sure!!!
 
 int print_results(int, int, int,
 		  double *, double *, double *, double *);
@@ -107,6 +107,7 @@ int main(int argc, char** argv) {
   // call nipals_cublas()
   start=clock();
   memcpy(R, X, M*N * sizeof(X[0]));
+  //DM insert references here????  not sure!
   nipals_cublas(M, N, K, T, P, R);
   dtime = ((double)clock() - start)/CLOCKS_PER_SEC;
 
@@ -132,7 +133,9 @@ int main(int argc, char** argv) {
   return EXIT_SUCCESS;
 }
 
-int nipals_cublas(int M, int N, int K, double *T, double *P, double *R)
+//dm updated to pass pointers to matrices by reference instead of value
+//dm not sure!!!
+int nipals_cublas(int M, int N, int K, double *&T, double *&P, double *&R)
 {
   // PCA model: X = T * P’ + R
   
