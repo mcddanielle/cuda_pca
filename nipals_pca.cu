@@ -20,7 +20,11 @@
 
 // declarations
 int nipals_cublas(int, int, int,
-		  double *, double *, double *); //dm not sure!!!
+		  double *, double *, double *);
+//dm not sure about whether to include address & references!!!
+//also there is a note about adding a pass by ref
+//If the legacy API function returns a scalar value, add an extra scalar parameter of the same type passed by reference, as the last parameter to the same function.
+//https://docs.nvidia.com/cuda/cublas/index.html
 
 int print_results(int, int, int,
 		  double *, double *, double *, double *);
